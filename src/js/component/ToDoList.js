@@ -1,10 +1,11 @@
 import React from "react";
+import { useState, useEffect } from "react";
 import "../../styles/index.scss";
 
 const ToDoList = () => {
-	const [todo, setTodo] = React.useState("");
-	const [todos, setTodos] = React.useState([]);
-
+	const [todo, setTodo] = useState("");
+	const [todos, setTodos] = useState([]);
+	const [hover, setHover] = useState(false);
 	const handleChange = e => {
 		setTodo(e.target.value);
 	};
@@ -42,20 +43,20 @@ const ToDoList = () => {
 	};
 
 	return (
-		<div className="container-fluid">
-			<form onSubmit={onSubmit}>
-				<label htmlFor="todo">Todo text</label>
-				<br />
-				<input
-					id="todo"
-					className="todo-input"
-					onChange={handleChange}
-					value={todo}
-				/>
-				<button type="submit" className="add-btn">
-					Add
-				</button>
-			</form>
+		<div className="container">
+			<h1>todos</h1>
+			<div></div>
+			<input
+				id="todo"
+				className="todo-input"
+				onChange={handleChange}
+				value={todo}
+				placeholder="What needs to be done?"
+			/>
+			<button onClick={onSubmit} className="add-btn">
+				Add
+			</button>
+
 			<div>
 				<ul>
 					{todos.map(todo => (
@@ -72,7 +73,9 @@ const ToDoList = () => {
 							<span
 								className="delete-btn"
 								onClick={() => removeTodo(todo.id)}>
-								x
+								{hover && (
+									<i className="far fa-times-circle"></i>
+								)}
 							</span>
 						</li>
 					))}
