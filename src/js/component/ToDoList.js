@@ -62,6 +62,8 @@ const ToDoList = () => {
 					{todos.map(todo => (
 						<li key={todo.id}>
 							<span
+								onMouseEnter={() => setHover(true)}
+								onMouseLeave={() => setHover(false)}
 								className={
 									todo.completed
 										? "todo-completed"
@@ -80,6 +82,11 @@ const ToDoList = () => {
 						</li>
 					))}
 				</ul>
+				<span>
+					{todos.length > 0
+						? todos.length + "item left"
+						: "No items left"}
+				</span>
 			</div>
 		</div>
 	);
