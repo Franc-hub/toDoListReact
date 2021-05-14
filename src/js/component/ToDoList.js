@@ -5,7 +5,7 @@ import "../../styles/index.scss";
 const ToDoList = () => {
 	const [todo, setTodo] = useState("");
 	const [todos, setTodos] = useState([]);
-	const [hover, setHover] = useState([]);
+	const [hover, setHover] = useState(false);
 	const handleChange = e => {
 		setTodo(e.target.value);
 	};
@@ -43,7 +43,7 @@ const ToDoList = () => {
 	};
 
 	return (
-		<div className="col-6 offset-3">
+		<div className="container">
 			<h1>todos</h1>
 			<div></div>
 			<input
@@ -59,35 +59,28 @@ const ToDoList = () => {
 
 			<div>
 				<ul>
-					{todos.map((todo, index) => {
-						// hover[index] = false;
-						() => {
-							setHover(["hola"]);
-						};
-
-						return (
-							<li className="row" key={todo.id}>
-								<span
-									onMouseEnter={() => setHover(true)}
-									onMouseLeave={() => setHover(false)}
-									className={
-										todo.completed
-											? "todo-completed col-md-4"
-											: "col-md-4"
-									}
-									onClick={() => toggleTodo(todo.id)}>
-									{todo.text}
-								</span>
-								<span
-									className="delete-btn"
-									onClick={() => removeTodo(todo.id)}>
-									{hover[index] && (
-										<i className="far fa-times-circle"></i>
-									)}
-								</span>
-							</li>
-						);
-					})}
+					{todos.map(todo => (
+						<li key={todo.id}>
+							<span
+								onMouseEnter={() => setHover(true)}
+								onMouseLeave={() => setHover(false)}
+								className={
+									todo.completed
+										? "todo-completed"
+										: undefined
+								}
+								onClick={() => toggleTodo(todo.id)}>
+								{todo.text}
+							</span>
+							<span
+								className="delete-btn"
+								onClick={() => removeTodo(todo.id)}>
+								{hover && (
+									<i className="far fa-times-circle"></i>
+								)}
+							</span>
+						</li>
+					))}
 				</ul>
 				<span>
 					{todos.length > 0
