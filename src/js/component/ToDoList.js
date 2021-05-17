@@ -41,52 +41,72 @@ const ToDoList = () => {
 		});
 		setTodos(updatedTodos);
 	};
+	const handleKeyPress = e => {
+		if (e.key === "Enter" && e.target.value !== "") {
+			addTodo();
+			setTodo("");
+			onSubmit();
+		}
+	};
 
 	return (
 		<div className="container">
-			<h1>todos</h1>
-			<div></div>
-			<input
-				id="todo"
-				className="todo-input"
-				onChange={handleChange}
-				value={todo}
-				placeholder="What needs to be done?"
-			/>
-			<button onClick={onSubmit} className="add-btn">
-				Add
-			</button>
+			<div className="row ">
+				<div className="col-md-12 title ">
+					<h1>todos</h1>
+				</div>
+			</div>
+			<div className="row list">
+				<div className="col-md-12">
+					<div className="row">
+						<div className="col-md-8 ">
+							<input
+								id="todo"
+								className="todo-input"
+								onChange={handleChange}
+								value={todo}
+								placeholder="What needs to be done?"
+								onKeyPress={handleKeyPress}
+							/>
+						</div>
+						<div className="col-md-4"></div>
+					</div>
 
-			<div>
-				<ul>
-					{todos.map(todo => (
-						<li key={todo.id}>
-							<span
-								onMouseEnter={() => setHover(true)}
-								onMouseLeave={() => setHover(false)}
-								className={
-									todo.completed
-										? "todo-completed"
-										: undefined
-								}
-								onClick={() => toggleTodo(todo.id)}>
-								{todo.text}
-							</span>
-							<span
-								className="delete-btn"
-								onClick={() => removeTodo(todo.id)}>
-								{hover && (
-									<i className="far fa-times-circle"></i>
-								)}
-							</span>
-						</li>
-					))}
-				</ul>
-				<span>
-					{todos.length > 0
-						? todos.length + "item left"
-						: "No items left"}
-				</span>
+					<div className="row">
+						<div className="col-md-12">
+							<ul>
+								{todos.map(todo => (
+									<li
+										key={todo.id}
+										onMouseEnter={() => setHover(true)}
+										onMouseLeave={() => setHover(false)}>
+										<span
+											className={
+												todo.completed
+													? "todo-completed"
+													: undefined
+											}
+											onClick={() => toggleTodo(todo.id)}>
+											{todo.text}
+										</span>
+										<span
+											className="delete-btn"
+											onClick={() => removeTodo(todo.id)}>
+											{hover && (
+												<i className="far fa-times-circle"></i>
+											)}
+										</span>
+									</li>
+								))}
+							</ul>
+						</div>
+					</div>
+					<span className="span-bottom">
+						{todos.length > 0
+							? todos.length + "item left"
+							: "No items left"}
+					</span>
+				</div>
 			</div>
 		</div>
 	);
